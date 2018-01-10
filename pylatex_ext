@@ -53,10 +53,6 @@ class Cases(MyEnvironment):
     content_separator = "\\\\\n"
 
 
-def dollar(x):
-    return Math(data=x, inline=True)
-
-
 def sub(x, y):
     return NoEscape('%s_%s'%(x, y))
 
