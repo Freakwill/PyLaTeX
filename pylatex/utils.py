@@ -358,3 +358,10 @@ def dollar(x, *args, **kwargs):
     example: dollar('c_B') # $c_B$
     '''
     return Math(data=x, inline=True, escape=False, *args, **kwargs)
+
+
+def ddollar(x, *args, **kwargs):
+    '''math form: $$math expression$$
+    example: ddollar('c_B') # $$c_B$$
+    '''
+    return Math(data=x, inline=False, escape=False, *args, **kwargs)
