@@ -361,7 +361,7 @@ def dollar(x, *args, **kwargs):
 
 
 def ddollar(x, *args, **kwargs):
-    '''math form: $$math expression$$
-    example: ddollar('c_B') # $$c_B$$
+    '''math form: \[math expression\] == $$math expression$$
+    example: ddollar('c_B') # \[c_B\]
     '''
     return Math(data=x, inline=False, escape=False, *args, **kwargs)
