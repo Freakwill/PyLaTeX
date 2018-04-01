@@ -351,3 +351,10 @@ def rm_temp_dir():
 
     if os.path.exists(_tmp_path):
         shutil.rmtree(_tmp_path)
+
+        
+def dollar(x, *args, **kwargs):
+    '''inline math form: $math expression$
+    example: dollar('c_B') # $c_B$
+    '''
+    return Math(data=x, inline=True, escape=False, *args, **kwargs)
