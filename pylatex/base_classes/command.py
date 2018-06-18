@@ -183,7 +183,8 @@ class Command(CommandBase):
     def __getattr__(self, command):
         return lambda *x: Command(command, arguments=Arguments(*x), options=self.options, extra_arguments=self.extra_arguments)
 
-ez = Command()  # ez.frac('x', 'y') == '\frac{x}{y}'
+
+dash = Command(); dash.escape = True  # dash.frac('x', 'y') == '\frac{x}{y}'
 
 
 class UnsafeCommand(Command):
@@ -387,7 +388,7 @@ def newcommand(name, definition, n=-1, default=None, prefix=''):
     '''generate the latex code of newcommand
     
     Example:
-    >>> newcommand('mycmd','#1+#2', -1, 'lala').dumps()
+    >>> newcommand('mycmd','#1+#2', default='lala').dumps()
     \newcommand{\mycmd}[2][lala]{#1+#2}
     
     Arguments:
