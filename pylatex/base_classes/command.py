@@ -180,6 +180,11 @@ class Command(CommandBase):
         if packages is not None:
             self.packages |= packages
 
+    def __getattr__(self, command):
+        return lambda *x: Command(command, arguments=Arguments(*x), options=self.options, extra_arguments=self.extra_arguments)
+
+ez = Command()  # ez.frac('x', 'y') == '\frac{x}{y}'
+
 
 class UnsafeCommand(Command):
     """An unsafe version of the `Command` class.
@@ -376,3 +381,38 @@ class Arguments(Parameters):
         """
 
         return self._format_contents('{', '}{', '}')
+
+
+def newcommand(name, definition, n=-1, default=None, prefix=''):
+    '''generate the latex code of newcommand
+    
+    Example:
+    >>> newcommand('mycmd','#1+#2', -1, 'lala').dumps()
+    \newcommand{\mycmd}[2][lala]{#1+#2}
+    
+    Arguments:
+        name {str} -- name of new command
+        definition {str} -- the body of command
+    
+    Keyword Arguments:
+        n {number} -- the number of arguments (default: {-1})
+        default {str} -- the default value of the first argument (default: {None})
+        prefix {str} -- '', re' or 'provide' (default: {''})
+    
+    Returns:
+        UnsafeCommand
+    '''
+    if prefix:
+        newcmd = prefix + 'newcommand'
+    if n < 0:
+        # get the number of arguments automaticly
+        import re
+        rx = re.compile('(?<=#)\d')
+        n = max(map(int, rx.findall(definition)))
+    if default is None:
+        if n == 0:
+            return UnsafeCommand(newcmd, arguments='\\%s'%name, extra_arguments=definition)
+        return UnsafeCommand(newcmd, arguments='\\%s'%name, options=n, extra_arguments=definition)
+    else:
+        return UnsafeCommand(newcmd, arguments='\\%s'%name, options=SpecialOptions(n, default), extra_arguments=definition)
+
