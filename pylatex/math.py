@@ -10,13 +10,60 @@ from .base_classes import Command, Container, Environment
 from .package import Package
 
 
-class Alignat(Environment):
+class MathEquation(Environment):
+    # base class of math equation environment
+    packages = [Package('amsmath')]
+    escape = False
+    content_separator = "\\\\\n"
+
+
+    def __init__(self, numbering=True, escape=None, *args, **kwargs):
+        """
+        Parameters
+        ----------
+        numbering : bool
+            Whether to number equations
+        escape : bool
+            if True, will escape strings
+        """
+        self.aligns = aligns
+        self.numbering = numbering
+        self.escape = escape
+        if not numbering:
+            self._star_latex_name = True
+        super(MathEquation, self).__init__(*args, **kwargs)
+
+    def add_row(self, row):
+        self.append(dumps_list([elm for elm in row], token=' & ', escape=False))
+
+
+class Align(MathEquation):
+    """A class to wrap LaTeX's align environment.
+    align is the base of the math equation environment
+    """
+    pass
+
+class Split(MathEquation):
+    """A class to wrap LaTeX's split environment.
+    """
+    pass
+
+class Gather(MathEquation):
+    """A class to wrap LaTeX's gather environment.
+    """
+    pass
+
+
+class Equation(MathEquation):
+    pass
+
+
+class Alignat(Align):
     """Class that represents a aligned equation environment."""
 
     #: Alignat environment cause compile errors when they do not contain items.
     #: This is why it is omitted fully if they are empty.
     omit_if_empty = True
-    packages = [Package('amsmath')]
 
     def __init__(self, aligns=2, numbering=True, escape=None):
         """
@@ -30,11 +77,7 @@ class Alignat(Environment):
             if True, will escape strings
         """
         self.aligns = aligns
-        self.numbering = numbering
-        self.escape = escape
-        if not numbering:
-            self._star_latex_name = True
-        super().__init__(start_arguments=[str(int(aligns))])
+        super().__init__(numbering=numbering, escape=escape, start_arguments=[str(int(aligns))])
 
 
 class Math(Container):
@@ -154,3 +197,54 @@ class Matrix(Environment):
         super().dumps_content()
 
         return string
+
+
+
+def dollar(x, *args, **kwargs):
+    '''inline math form: $math expression$
+    example: dollar('c_B') # $c_B$
+    '''
+    return Math(data=x, inline=True, escape=False, *args, **kwargs)
+
+
+def vector(x, mtype='p', *args, **kwargs):
+    # x is a matrix(1*n-shape) or vector(n-dim) or a list of numbers
+    # more easy then Vector
+    if isinstance(x, np.ndarray) and x.ndim == 1:
+        x = x.reshape(1, x.shape[0])
+    elif isinstance(x, (tuple, list)):
+        x = np.array([x])
+    return Matrix(x, mtype=mtype, *args, **kwargs)
+
+
+class Determinant(Matrix):
+    '''Determinant < Matrix
+    matrix: square matrix
+    '''
+    def __init__(self, matrix, *args, **kwargs):
+        if isinstance(matrix, (tuple, list)):
+            matrix = np.array(matrix)
+        assert matrix.ndim == 2 and matrix.shape[1] == matrix.shape[0]
+        super(Determinant, self).__init__(matrix, mtype='v', *args, **kwargs)
+
+
+class Vector(Matrix):
+    '''Vector < Matrix
+    vec: array(1D) | tuple | list (of numbers)
+    '''
+    def __init__(self, vec, mtype='p', *args, **kwargs):
+        if isinstance(vec, np.ndarray):
+            vec = vec
+        elif isinstance(vec, (tuple, list)):
+            vec = np.array(vec)
+        if vec.ndim == 1:
+            vec = vec.reshape(1, vec.shape[0])
+        super(Vector, self).__init__(matrix=vec, mtype=mtype, *args, **kwargs)
+
+
+class ColumnVector(Vector):
+    '''Column Vector'''
+    def __init__(self, *args, **kwargs):
+        super(ColumnVector, self).__init__(*args, **kwargs)
+        self.matrix = np.transpose(self.matrix)
+
