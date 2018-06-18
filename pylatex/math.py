@@ -26,7 +26,6 @@ class MathEquation(Environment):
         escape : bool
             if True, will escape strings
         """
-        self.aligns = aligns
         self.numbering = numbering
         self.escape = escape
         if not numbering:
@@ -199,16 +198,6 @@ class Matrix(Environment):
         return string
 
 
-def vector(x, mtype='p', *args, **kwargs):
-    # x is a matrix(1*n-shape) or vector(n-dim) or a list of numbers
-    # more easy then Vector
-    if isinstance(x, np.ndarray) and x.ndim == 1:
-        x = x.reshape(1, x.shape[0])
-    elif isinstance(x, (tuple, list)):
-        x = np.array([x])
-    return Matrix(x, mtype=mtype, *args, **kwargs)
-
-
 class Determinant(Matrix):
     '''Determinant < Matrix
     matrix: square matrix
@@ -240,3 +229,33 @@ class ColumnVector(Vector):
         super(ColumnVector, self).__init__(*args, **kwargs)
         self.matrix = np.transpose(self.matrix)
 
+# functions for ease
+def dollar(x, *args, **kwargs):
+    '''inline math form: $math expression$
+    example: dollar('c_B') # $c_B$
+    '''
+    return Math(data=x, inline=True, escape=False, *args, **kwargs)
+
+
+def ddollar(x, *args, **kwargs):
+    '''math form: \[math expression\] == $$math expression$$
+    example: ddollar('c_B') # \[c_B\]
+    '''
+    return Math(data=x, inline=False, escape=False, *args, **kwargs)
+
+
+def vector(x, mtype='p', *args, **kwargs):
+    # x is a matrix(1*n-shape) or vector(n-dim) or a list of numbers
+    # more easy then Vector
+    if isinstance(x, np.ndarray) and x.ndim == 1:
+        x = x.reshape(1, x.shape[0])
+    elif isinstance(x, (tuple, list)):
+        x = np.array([x])
+    return Matrix(x, mtype=mtype, *args, **kwargs)
+
+
+def diff(y, x='x'):
+    return dash.frac(dash.mathrm('d').dumps() + y, dash.mathrm('d').dumps() + x)
+
+def pdiff(y, x='x'):
+    return dash.frac(dash.partial().dumps() + y, dash.partial().dumps() + x)
