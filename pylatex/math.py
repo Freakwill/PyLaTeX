@@ -6,7 +6,7 @@ This module implements the classes that deal with math.
     :license: MIT, see License for more details.
 """
 
-from .base_classes import Command, Container, Environment
+from .base_classes import Command, Container, Environment, dash
 from .package import Package
 
 
