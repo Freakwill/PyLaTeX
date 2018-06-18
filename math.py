@@ -26,7 +26,6 @@ class MathEquation(Environment):
         escape : bool
             if True, will escape strings
         """
-        self.aligns = aligns
         self.numbering = numbering
         self.escape = escape
         if not numbering:
