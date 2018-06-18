@@ -179,9 +179,10 @@ class Environment(Container):
         begin = Command('begin', self.start_arguments, self.options,
                         extra_arguments=extra_arguments)
         begin.arguments._positional_args.insert(0, self.latex_name)
-        string += begin.dumps() + self.content_separator
+        begin_separator = end_separator = '%\n'
+        string += begin.dumps() + begin_separator
 
-        string += content + self.content_separator
+        string += content + end_separator
 
         string += Command('end', self.latex_name).dumps()
 
