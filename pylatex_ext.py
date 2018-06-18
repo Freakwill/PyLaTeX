@@ -204,17 +204,34 @@ def colvector(x, mtype='p', *args, **kwargs):
     return Matrix(x, mtype=mtype, *args, **kwargs)
 
 
-def newcommand(name, definition, n=0, default=None, renew=False):
-    if renew:
-        newcmd = 'renewcommand'
-    else:
-        newcmd = 'newcommand'
+def newcommand(name, definition, n=-1, default=None, prefix=''):
+    '''generate the latex code of newcommand
+    
+    Example:
+    >>> newcommand('mycmd','#1+#2', -1, 'lala').dumps()
+    \newcommand{\mycmd}[2][lala]{#1+#2}
+    
+    Arguments:
+        name {str} -- name of new command
+        definition {str} -- the body of command
+    
+    Keyword Arguments:
+        n {number} -- the number of arguments (default: {-1})
+        default {str} -- the default value of the first argument (default: {None})
+        prefix {str} -- '', re' or 'provide' (default: {''})
+    
+    Returns:
+        UnsafeCommand
+    '''
+    if prefix:
+        newcmd = prefix + 'newcommand'
+    if n < 0:
+        import re
+        rx = re.compile('(?<=#)\d')
+        n = max(map(int, rx.findall(definition)))
     if default is None:
         if n == 0:
             return UnsafeCommand(newcmd, arguments='\\%s'%name, extra_arguments=definition)
         return UnsafeCommand(newcmd, arguments='\\%s'%name, options=n, extra_arguments=definition)
     else:
         return UnsafeCommand(newcmd, arguments='\\%s'%name, options=SpecialOptions(n, default), extra_arguments=definition)
-
-
-print(newcommand('lala','#1#2', 2, 'lala').dumps())
