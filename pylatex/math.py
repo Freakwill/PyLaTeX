@@ -199,14 +199,6 @@ class Matrix(Environment):
         return string
 
 
-
-def dollar(x, *args, **kwargs):
-    '''inline math form: $math expression$
-    example: dollar('c_B') # $c_B$
-    '''
-    return Math(data=x, inline=True, escape=False, *args, **kwargs)
-
-
 def vector(x, mtype='p', *args, **kwargs):
     # x is a matrix(1*n-shape) or vector(n-dim) or a list of numbers
     # more easy then Vector
