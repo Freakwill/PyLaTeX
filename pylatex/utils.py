@@ -351,4 +351,3 @@ def rm_temp_dir():
 
     if os.path.exists(_tmp_path):
         shutil.rmtree(_tmp_path)
-
