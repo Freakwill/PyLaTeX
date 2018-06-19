@@ -181,7 +181,7 @@ class Command(CommandBase):
             self.packages |= packages
 
 
-class Dash:
+class Slash:
     """Shorthand for Command."""
 
     def __getattr__(self, command):
@@ -189,8 +189,8 @@ class Dash:
             return Command(command, arguments=Arguments(*args), **kwargs)
         return f
 
-dash = Dash()
-dash.escape = True  # dash.frac('x', 'y') == '\frac{x}{y}'
+slash = Slash()
+slash.escape = True  # dash.frac('x', 'y') == '\frac{x}{y}'
 
 
 class UnsafeCommand(Command):
