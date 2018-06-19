@@ -8,7 +8,7 @@ This module implements the classes that deal with math.
 
 import numpy as np
 
-from .base_classes import Command, Container, Environment, dash
+from .base_classes import Command, Container, Environment, slash
 from .package import Package
 from .utils import dumps_list
 
@@ -313,10 +313,10 @@ def diff(y, x='x'):
     Returns:
         Command
     """
-    return dash.frac(
-        dash.mathrm('d').dumps() + y, dash.mathrm('d').dumps() + x)
+    return slash.frac(
+        slash.mathrm('d').dumps() + y, slash.mathrm('d').dumps() + x)
 
 
 def pdiff(y, x='x'):
     """See diff."""
-    return dash.frac(dash.partial(y).dumps(), dash.partial(x).dumps())
+    return slash.frac(slash.partial(y).dumps(), slash.partial(x).dumps())
