@@ -393,7 +393,6 @@ class Arguments(Parameters):
 def newcommand(name, definition, n=-1, default=None, prefix=''):
     r"""Generate the latex code of newcommand.
 
-    Example:
     >>> newcommand('mycmd','#1+#2', default='lala').dumps()
     \newcommand{\mycmd}[2][lala]{#1+#2}
 
