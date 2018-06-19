@@ -260,6 +260,7 @@ class ColumnVector(Vector):
     """Column Vector, subclass of Vector."""
 
     def __init__(self, *args, **kwargs):
+        """See Vector"""
         super(ColumnVector, self).__init__(*args, **kwargs)
         self.matrix = np.transpose(self.matrix)
 
@@ -287,7 +288,7 @@ def ddollar(x, *args, **kwargs):
 
 def vector(x, mtype='p', *args, **kwargs):
     """Replace Vector.
-    
+
     It is more easy then Vector.
 
     Arguments:
