@@ -409,8 +409,7 @@ def newcommand(name, definition, n=-1, default=None, prefix=''):
     Returns:
         UnsafeCommand
     """
-    if prefix:
-        newcmd = prefix + 'newcommand'
+    newcmd = prefix + 'newcommand'
     if n < 0:
         # get the number of arguments automatically
         import re
