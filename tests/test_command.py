@@ -3,12 +3,12 @@
 
 """Test to validate that Environments uphold contract of base classes."""
 
-from pylatex.base_classes import dash, newcommand
+from pylatex.base_classes import slash, newcommand
 
 
 def test_command():
-    assert dash.frac('x', 'y').dumps() == r'\frac{x}{y}', \
-        "Unexpected result of dash.frac"
+    assert slash.frac('x', 'y').dumps() == r'\frac{x}{y}', \
+        "Unexpected result of slash.frac"
 
 
 def test_newcommand():
