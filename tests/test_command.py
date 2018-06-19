@@ -3,7 +3,7 @@
 
 """Test to validate that Environments uphold contract of base classes."""
 
-from pylatex.base_classes import Command, dash, newcommand
+from pylatex.base_classes import dash, newcommand
 
 
 def test_command():
@@ -12,6 +12,6 @@ def test_command():
 
 
 def test_newcommand():
-    res = newcommand('mycmd','#1+#2', default='lala').dumps()
+    res = newcommand('mycmd', '#1+#2', default='lala').dumps()
     assert res == r'\newcommand{\mycmd}[2][lala]{#1+#2}', \
         "Unexpected result of newcommand"
