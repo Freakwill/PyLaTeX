@@ -12,6 +12,6 @@ def test_dollar():
 
 
 def test_vector():
-    assert Vector([1,2]).dumps() == r'''\begin{pmatrix}%
+    assert Vector([1, 2]).dumps() == r'''\begin{pmatrix}%
 1&2%
 \end{pmatrix}'''
