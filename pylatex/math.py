@@ -13,10 +13,9 @@ from .package import Package
 from .utils import dumps_list
 
 
-
 class MathEquation(Environment):
     """The base class of math equation environments.
-    
+
     Other math equation environments extend the base class.
     """
 
@@ -40,6 +39,10 @@ class MathEquation(Environment):
         super(MathEquation, self).__init__(*args, **kwargs)
 
     def add_row(self, row):
+        """Add a row into the equations.
+        
+        Similar to add_row in Table.
+        """
         self.append(
             dumps_list([elm for elm in row], token=' & ', escape=False))
 
@@ -261,34 +264,35 @@ class ColumnVector(Vector):
         self.matrix = np.transpose(self.matrix)
 
 
-# Functions for ease
+# Functions for ease.
 def dollar(x, *args, **kwargs):
-    """Shorthand for inline math form:
-        $math expression$.
+    """Shorthand for inline math form: $math expression$.
 
     Example:
         >>> dollar('c_B')
         $c_B$
     """
+
     return Math(data=x, inline=True, escape=False, *args, **kwargs)
 
 
 def ddollar(x, *args, **kwargs):
-    r"""Math form:
-        \[math expression\] == $$math expression$$
-
-    Example: 
-        >>> ddollar('c_B')
-        \[c_B\]
+    r"""Shorthand for math form,
+        \[math expression\] == $$math expression$$.
 
     See also: dollar
+
+    Example:
+        >>> ddollar('c_B')
+        \[c_B\]
     """
     return Math(data=x, inline=False, escape=False, *args, **kwargs)
 
 
 def vector(x, mtype='p', *args, **kwargs):
-    """x is a matrix(1*n-shape) or vector(n-dim) or a list of numbers.
-    it is more easy then Vector.
+    """it is more easy then Vector.
+    Arguments:
+        x -- a matrix(1*n-shape) or vector(n-dim) or a list of numbers.
     """
     if isinstance(x, np.ndarray) and x.ndim == 1:
         x = x.reshape(1, x.shape[0])
@@ -315,4 +319,4 @@ def diff(y, x='x'):
 
 def pdiff(y, x='x'):
     """See diff"""
-    return dash.frac(dash.partial().dumps() + y, dash.partial().dumps() + x)
+    return dash.frac(dash.partial(y).dumps(), dash.partial(x).dumps())
