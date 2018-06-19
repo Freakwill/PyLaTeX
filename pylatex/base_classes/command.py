@@ -183,7 +183,7 @@ class Command(CommandBase):
 
 class Dash:
     """Shorthand for Command"""
-    
+
     def __getattr__(self, command):
         def f(*args, **kwargs):
             return Command(command, arguments=Arguments(*args), **kwargs)
@@ -391,7 +391,7 @@ class Arguments(Parameters):
 
 
 def newcommand(name, definition, n=-1, default=None, prefix=''):
-    """Generate the latex code of newcommand.
+    r"""Generate the latex code of newcommand.
 
     Example:
     >>> newcommand('mycmd','#1+#2', default='lala').dumps()
@@ -400,7 +400,7 @@ def newcommand(name, definition, n=-1, default=None, prefix=''):
     Arguments:
         name {str} -- name of new command
         definition {str} -- the body of command
-    
+
     Keyword Arguments:
         n {number} -- the number of arguments (default: {-1})
         default {str} -- default value of the first argument (default: {None})
