@@ -299,24 +299,3 @@ def vector(x, mtype='p', *args, **kwargs):
     elif isinstance(x, (tuple, list)):
         x = np.array([x])
     return Matrix(x, mtype=mtype, *args, **kwargs)
-
-
-def diff(y, x='x'):
-    r"""Generate Latex code r'\frac{d y}{d x}'.
-
-    Arguments:
-        y {str} -- dependent variable
-
-    Keyword Arguments:
-        x {str} -- independent variable (default: {'x'})
-
-    Returns:
-        Command
-    """
-    return slash.frac(
-        slash.mathrm('d').dumps() + y, slash.mathrm('d').dumps() + x)
-
-
-def pdiff(y, x='x'):
-    """See diff."""
-    return slash.frac(slash.partial(y).dumps(), slash.partial(x).dumps())
