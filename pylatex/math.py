@@ -40,7 +40,7 @@ class MathEquation(Environment):
 
     def add_row(self, row):
         """Add a row into the equations.
-        
+
         Similar to add_row in Table.
         """
         self.append(
@@ -243,7 +243,7 @@ class Vector(Matrix):
             vec {[type]} -- [description]
             *args {[type]} -- [description]
             **kwargs {[type]} -- [description]
-        
+
         Keyword Arguments:
             mtype {str} -- [description] (default: {'p'})
         """
@@ -272,15 +272,11 @@ def dollar(x, *args, **kwargs):
         >>> dollar('c_B')
         $c_B$
     """
-
     return Math(data=x, inline=True, escape=False, *args, **kwargs)
 
 
 def ddollar(x, *args, **kwargs):
-    r"""Shorthand for math form,
-        \[math expression\] == $$math expression$$.
-
-    See also: dollar
+    r"""Shorthand for math form: \[math expression\] == $$math expression$$.
 
     Example:
         >>> ddollar('c_B')
@@ -290,7 +286,10 @@ def ddollar(x, *args, **kwargs):
 
 
 def vector(x, mtype='p', *args, **kwargs):
-    """it is more easy then Vector.
+    """Replace Vector.
+    
+    It is more easy then Vector.
+
     Arguments:
         x -- a matrix(1*n-shape) or vector(n-dim) or a list of numbers.
     """
@@ -313,10 +312,10 @@ def diff(y, x='x'):
     Returns:
         Command
     """
-    return dash.frac(dash.mathrm('d').dumps() + y,
-        dash.mathrm('d').dumps() + x)
+    return dash.frac(
+        dash.mathrm('d').dumps() + y, dash.mathrm('d').dumps() + x)
 
 
 def pdiff(y, x='x'):
-    """See diff"""
+    """See diff."""
     return dash.frac(dash.partial(y).dumps(), dash.partial(x).dumps())
