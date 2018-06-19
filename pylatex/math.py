@@ -6,16 +6,23 @@ This module implements the classes that deal with math.
     :license: MIT, see License for more details.
 """
 
+import numpy as np
+
 from .base_classes import Command, Container, Environment, dash
 from .package import Package
+from .utils import dumps_list
+
 
 
 class MathEquation(Environment):
-    # base class of math equation environment
+    """base class of math equation environment
+    
+    other math equation environments extend the base class
+    """
+
     packages = [Package('amsmath')]
     escape = False
     content_separator = "\\\\\n"
-
 
     def __init__(self, numbering=True, escape=None, *args, **kwargs):
         """
@@ -40,20 +47,28 @@ class Align(MathEquation):
     """A class to wrap LaTeX's align environment.
     align is the base of the math equation environment
     """
+
     pass
+
 
 class Split(MathEquation):
     """A class to wrap LaTeX's split environment.
     """
+
     pass
+
 
 class Gather(MathEquation):
     """A class to wrap LaTeX's gather environment.
     """
+
     pass
 
 
 class Equation(MathEquation):
+    """A class to wrap LaTeX's equation environment.
+    """
+
     pass
 
 
@@ -87,7 +102,7 @@ class Math(Container):
     content_separator = ' '
 
     def __init__(self, *, inline=False, data=None, escape=None):
-        r"""
+        """
         Args
         ----
         data: list
@@ -199,9 +214,11 @@ class Matrix(Environment):
 
 
 class Determinant(Matrix):
-    '''Determinant < Matrix
-    matrix: square matrix
-    '''
+    """Determinant < Matrix
+    Arguments:
+        matrix: square matrix
+    """
+
     def __init__(self, matrix, *args, **kwargs):
         if isinstance(matrix, (tuple, list)):
             matrix = np.array(matrix)
@@ -210,9 +227,11 @@ class Determinant(Matrix):
 
 
 class Vector(Matrix):
-    '''Vector < Matrix
-    vec: array(1D) | tuple | list (of numbers)
-    '''
+    """Vector < Matrix
+    Arguments:
+        vec: array(1D) | tuple | list (of numbers)
+    """
+
     def __init__(self, vec, mtype='p', *args, **kwargs):
         if isinstance(vec, np.ndarray):
             vec = vec
@@ -224,29 +243,35 @@ class Vector(Matrix):
 
 
 class ColumnVector(Vector):
-    '''Column Vector'''
+    """Column Vector, subclass of Vector
+    """
+
     def __init__(self, *args, **kwargs):
         super(ColumnVector, self).__init__(*args, **kwargs)
         self.matrix = np.transpose(self.matrix)
 
+
 # functions for ease
 def dollar(x, *args, **kwargs):
-    '''inline math form: $math expression$
-    example: dollar('c_B') # $c_B$
-    '''
+    """Shorthand for inline math form: $math expression$
+    Example:
+        dollar('c_B') # $c_B$
+    """
     return Math(data=x, inline=True, escape=False, *args, **kwargs)
 
 
 def ddollar(x, *args, **kwargs):
-    '''math form: \[math expression\] == $$math expression$$
-    example: ddollar('c_B') # \[c_B\]
-    '''
+    """Math form: \[math expression\] == $$math expression$$
+    Example: 
+        ddollar('c_B') # \[c_B\]
+    See also: dollar
+    """
     return Math(data=x, inline=False, escape=False, *args, **kwargs)
 
 
 def vector(x, mtype='p', *args, **kwargs):
-    # x is a matrix(1*n-shape) or vector(n-dim) or a list of numbers
-    # more easy then Vector
+    """x is a matrix(1*n-shape) or vector(n-dim) or a list of numbers.
+    it is more easy then Vector"""
     if isinstance(x, np.ndarray) and x.ndim == 1:
         x = x.reshape(1, x.shape[0])
     elif isinstance(x, (tuple, list)):
@@ -255,7 +280,21 @@ def vector(x, mtype='p', *args, **kwargs):
 
 
 def diff(y, x='x'):
+    """Generate Latex code r'\frac{d y}{d x}'
+    
+    Arguments:
+        y {str} -- dependent variable
+    
+    Keyword Arguments:
+        x {str} -- independent variable (default: {'x'})
+    
+    Returns:
+        Command
+    """
     return dash.frac(dash.mathrm('d').dumps() + y, dash.mathrm('d').dumps() + x)
 
+
 def pdiff(y, x='x'):
+    """See diff
+    """
     return dash.frac(dash.partial().dumps() + y, dash.partial().dumps() + x)
