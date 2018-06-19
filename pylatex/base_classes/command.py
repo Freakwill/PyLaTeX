@@ -181,7 +181,8 @@ class Command(CommandBase):
             self.packages |= packages
 
     def __getattr__(self, command):
-        return lambda *x: Command(command, arguments=Arguments(*x), options=self.options, extra_arguments=self.extra_arguments)
+        return lambda *x: Command(command, arguments=Arguments(*x),
+            options=self.options, extra_arguments=self.extra_arguments)
 
 
 dash = Command(); dash.escape = True  # dash.frac('x', 'y') == '\frac{x}{y}'
@@ -385,7 +386,7 @@ class Arguments(Parameters):
 
 
 def newcommand(name, definition, n=-1, default=None, prefix=''):
-    '''generate the latex code of newcommand
+    """Generate the latex code of newcommand
     
     Example:
     >>> newcommand('mycmd','#1+#2', default='lala').dumps()
@@ -397,23 +398,26 @@ def newcommand(name, definition, n=-1, default=None, prefix=''):
     
     Keyword Arguments:
         n {number} -- the number of arguments (default: {-1})
-        default {str} -- the default value of the first argument (default: {None})
+        default {str} -- default value of the first argument (default: {None})
         prefix {str} -- '', re' or 'provide' (default: {''})
     
     Returns:
         UnsafeCommand
-    '''
+    """
     if prefix:
         newcmd = prefix + 'newcommand'
     if n < 0:
-        # get the number of arguments automaticly
+        # get the number of arguments automatically
         import re
         rx = re.compile('(?<=#)\d')
         n = max(map(int, rx.findall(definition)))
     if default is None:
         if n == 0:
-            return UnsafeCommand(newcmd, arguments='\\%s'%name, extra_arguments=definition)
-        return UnsafeCommand(newcmd, arguments='\\%s'%name, options=n, extra_arguments=definition)
+            return UnsafeCommand(newcmd, arguments='\\%s' % name, 
+                extra_arguments=definition)
+        return UnsafeCommand(newcmd, arguments='\\%s' % name,
+            options=n, extra_arguments=definition)
     else:
-        return UnsafeCommand(newcmd, arguments='\\%s'%name, options=SpecialOptions(n, default), extra_arguments=definition)
+        return UnsafeCommand(newcmd, arguments='\\%s' % name,
+            options=SpecialOptions(n, default), extra_arguments=definition)
 
