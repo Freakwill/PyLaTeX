@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 
-"""Test to validate that Environments uphold contract of base classes."""
+"""Test to validate dollar and Vector."""
 
 from pylatex.math import Vector, dollar
 

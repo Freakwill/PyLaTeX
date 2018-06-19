@@ -1,12 +1,12 @@
 #!/usr/bin/python
 
 
-"""Test to validate that Environments uphold contract of base classes."""
+"""Test to validate slash and newcommand."""
 
 from pylatex.base_classes import slash, newcommand
 
 
-def test_command():
+def test_slash():
     assert slash.frac('x', 'y').dumps() == r'\frac{x}{y}', \
         "Unexpected result of slash.frac"
 
