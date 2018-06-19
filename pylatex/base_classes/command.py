@@ -190,7 +190,7 @@ class Slash:
         return f
 
 slash = Slash()
-slash.escape = True  # dash.frac('x', 'y') == '\frac{x}{y}'
+slash.escape = True  # slash.frac('x', 'y') == '\frac{x}{y}'
 
 
 class UnsafeCommand(Command):
