@@ -15,9 +15,9 @@ from .utils import dumps_list
 
 
 class MathEquation(Environment):
-    """base class of math equation environment
+    """The base class of math equation environments.
     
-    other math equation environments extend the base class
+    Other math equation environments extend the base class.
     """
 
     packages = [Package('amsmath')]
@@ -40,34 +40,33 @@ class MathEquation(Environment):
         super(MathEquation, self).__init__(*args, **kwargs)
 
     def add_row(self, row):
-        self.append(dumps_list([elm for elm in row], token=' & ', escape=False))
+        self.append(
+            dumps_list([elm for elm in row], token=' & ', escape=False))
 
 
 class Align(MathEquation):
     """A class to wrap LaTeX's align environment.
-    align is the base of the math equation environment
+
+    align is the base of the math equation environments in LaTeX.
     """
 
     pass
 
 
 class Split(MathEquation):
-    """A class to wrap LaTeX's split environment.
-    """
+    """A class to wrap LaTeX's split environment."""
 
     pass
 
 
 class Gather(MathEquation):
-    """A class to wrap LaTeX's gather environment.
-    """
+    """A class to wrap LaTeX's gather environment."""
 
     pass
 
 
 class Equation(MathEquation):
-    """A class to wrap LaTeX's equation environment.
-    """
+    """A class to wrap LaTeX's equation environment."""
 
     pass
 
@@ -91,14 +90,15 @@ class Alignat(Align):
             if True, will escape strings
         """
         self.aligns = aligns
-        super().__init__(numbering=numbering, escape=escape, start_arguments=[str(int(aligns))])
+        super().__init__(
+            numbering=numbering, escape=escape,
+            start_arguments=[str(int(aligns))])
 
 
 class Math(Container):
     """A class representing a math environment."""
 
     packages = [Package('amsmath')]
-
     content_separator = ' '
 
     def __init__(self, *, inline=False, data=None, escape=None):
@@ -214,12 +214,13 @@ class Matrix(Environment):
 
 
 class Determinant(Matrix):
-    """Determinant < Matrix
-    Arguments:
-        matrix: square matrix
-    """
+    """Determinant < Matrix."""
 
     def __init__(self, matrix, *args, **kwargs):
+        """
+        Arguments:
+            matrix: square matrix
+        """
         if isinstance(matrix, (tuple, list)):
             matrix = np.array(matrix)
         assert matrix.ndim == 2 and matrix.shape[1] == matrix.shape[0]
@@ -227,12 +228,22 @@ class Determinant(Matrix):
 
 
 class Vector(Matrix):
-    """Vector < Matrix
+    """Vector < Matrix.
+
     Arguments:
         vec: array(1D) | tuple | list (of numbers)
     """
 
     def __init__(self, vec, mtype='p', *args, **kwargs):
+        """
+        Arguments:
+            vec {[type]} -- [description]
+            *args {[type]} -- [description]
+            **kwargs {[type]} -- [description]
+        
+        Keyword Arguments:
+            mtype {str} -- [description] (default: {'p'})
+        """
         if isinstance(vec, np.ndarray):
             vec = vec
         elif isinstance(vec, (tuple, list)):
@@ -243,27 +254,33 @@ class Vector(Matrix):
 
 
 class ColumnVector(Vector):
-    """Column Vector, subclass of Vector
-    """
+    """Column Vector, subclass of Vector."""
 
     def __init__(self, *args, **kwargs):
         super(ColumnVector, self).__init__(*args, **kwargs)
         self.matrix = np.transpose(self.matrix)
 
 
-# functions for ease
+# Functions for ease
 def dollar(x, *args, **kwargs):
-    """Shorthand for inline math form: $math expression$
+    """Shorthand for inline math form:
+        $math expression$.
+
     Example:
-        dollar('c_B') # $c_B$
+        >>> dollar('c_B')
+        $c_B$
     """
     return Math(data=x, inline=True, escape=False, *args, **kwargs)
 
 
 def ddollar(x, *args, **kwargs):
-    """Math form: \[math expression\] == $$math expression$$
+    r"""Math form:
+        \[math expression\] == $$math expression$$
+
     Example: 
-        ddollar('c_B') # \[c_B\]
+        >>> ddollar('c_B')
+        \[c_B\]
+
     See also: dollar
     """
     return Math(data=x, inline=False, escape=False, *args, **kwargs)
@@ -271,7 +288,8 @@ def ddollar(x, *args, **kwargs):
 
 def vector(x, mtype='p', *args, **kwargs):
     """x is a matrix(1*n-shape) or vector(n-dim) or a list of numbers.
-    it is more easy then Vector"""
+    it is more easy then Vector.
+    """
     if isinstance(x, np.ndarray) and x.ndim == 1:
         x = x.reshape(1, x.shape[0])
     elif isinstance(x, (tuple, list)):
@@ -280,21 +298,21 @@ def vector(x, mtype='p', *args, **kwargs):
 
 
 def diff(y, x='x'):
-    """Generate Latex code r'\frac{d y}{d x}'
-    
+    r"""Generate Latex code r'\frac{d y}{d x}'.
+
     Arguments:
         y {str} -- dependent variable
-    
+
     Keyword Arguments:
         x {str} -- independent variable (default: {'x'})
-    
+
     Returns:
         Command
     """
-    return dash.frac(dash.mathrm('d').dumps() + y, dash.mathrm('d').dumps() + x)
+    return dash.frac(dash.mathrm('d').dumps() + y,
+        dash.mathrm('d').dumps() + x)
 
 
 def pdiff(y, x='x'):
-    """See diff
-    """
+    """See diff"""
     return dash.frac(dash.partial().dumps() + y, dash.partial().dumps() + x)
