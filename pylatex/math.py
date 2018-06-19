@@ -8,7 +8,7 @@ This module implements the classes that deal with math.
 
 import numpy as np
 
-from .base_classes import Command, Container, Environment, slash
+from .base_classes import Command, Container, Environment
 from .package import Package
 from .utils import dumps_list
 
