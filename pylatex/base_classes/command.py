@@ -389,20 +389,12 @@ class Arguments(Parameters):
         return self._format_contents('{', '}{', '}')
 
 
-def newcommand(cmdname, definition, n=-1, default=None, prefix=''):
+def newcommand(name, definition, n=-1, default=None, prefix=''):
     r"""Generate the latex code of newcommand.
 
-    Arguments:
-        cmdname {str} -- name of new command
-        definition {str} -- the body of command
-
-    Keyword Arguments:
-        n {number} -- the number of arguments (default: {-1})
-        default {str} -- default value of the first argument (default: {None})
-        prefix {str} -- '', re' or 'provide' (default: {''})
-
-    Returns:
-        UnsafeCommand
+    Example:
+    >>> newcommand('mycmd', '#1+#2', default='lala').dumps()
+    r'\newcommand{\mycmd}[2][lala]{#1+#2}'
     """
     newcmd = prefix + 'newcommand'
     if n < 0:
@@ -413,11 +405,11 @@ def newcommand(cmdname, definition, n=-1, default=None, prefix=''):
     if default is None:
         if n == 0:
             return UnsafeCommand(
-                newcmd, arguments='\\%s' % cmdname, extra_arguments=definition)
+                newcmd, arguments='\\%s' % name, extra_arguments=definition)
         return UnsafeCommand(
-            newcmd, arguments='\\%s' % cmdname,
+            newcmd, arguments='\\%s' % name,
             options=n, extra_arguments=definition)
     else:
         return UnsafeCommand(
-            newcmd, arguments='\\%s' % cmdname,
+            newcmd, arguments='\\%s' % name,
             options=SpecialOptions(n, default), extra_arguments=definition)
