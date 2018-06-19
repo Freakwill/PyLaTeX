@@ -182,7 +182,7 @@ class Command(CommandBase):
 
 
 class Dash:
-    """Shorthand for Command"""
+    """Shorthand for Command."""
 
     def __getattr__(self, command):
         def f(*args, **kwargs):
