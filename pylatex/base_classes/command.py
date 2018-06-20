@@ -188,12 +188,12 @@ class Slash:
 
     def __getattr__(self, command):
         def f(*args, **kwargs):
-            if self.escape is False:
-                args = (NoEscape(arg) for arg in args)
-            return Command(command, arguments=Arguments(*args), **kwargs)
+            args = Arguments(*args)
+            args.escape = self.escape
+            return Command(command, arguments=args, **kwargs)
         return f
 
-slash = Slash()    # slash.frac('x', 'y') == '\frac{x}{y}'
+slash = Slash()    # slash.frac('x', 'y').dumps() == '\frac{x}{y}'
 
 
 class UnsafeCommand(Command):
