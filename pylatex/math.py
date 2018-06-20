@@ -6,8 +6,6 @@ This module implements the classes that deal with math.
     :license: MIT, see License for more details.
 """
 
-import numpy as np
-
 from .base_classes import Command, Container, Environment
 from .package import Package
 from .utils import dumps_list
@@ -181,6 +179,8 @@ class Matrix(Environment):
 
         import numpy  # noqa, Sanity check if numpy is installed
 
+        if isinstance(matrix, (list, tuple)):
+            matrix = numpy.array(matrix)
         self.matrix = matrix
 
         self.latex_name = mtype + 'matrix'
@@ -224,8 +224,6 @@ class Determinant(Matrix):
         Arguments:
             matrix: square matrix
         """
-        if isinstance(matrix, (tuple, list)):
-            matrix = np.array(matrix)
         assert matrix.ndim == 2 and matrix.shape[1] == matrix.shape[0]
         super(Determinant, self).__init__(matrix, mtype='v', *args, **kwargs)
 
@@ -238,14 +236,13 @@ class Vector(Matrix):
     """
 
     def __init__(self, vec, mtype='p', *args, **kwargs):
-        """
+        r"""
         Args
         ----
-        vec: {tuple|list|array}
-        mtype: 'p' | 'b' ('p' by default)
+        vec: `numpy.ndarray` instance
+        mtype: str
+            'p' | 'b' ('p' by default)
         """
-        if isinstance(vec, (tuple, list)):
-            vec = np.array(vec)
         if vec.ndim == 1:
             vec = vec.reshape(1, vec.shape[0])
         super(Vector, self).__init__(matrix=vec, mtype=mtype, *args, **kwargs)
@@ -257,7 +254,7 @@ class ColumnVector(Vector):
     def __init__(self, *args, **kwargs):
         """See Vector"""
         super(ColumnVector, self).__init__(*args, **kwargs)
-        self.matrix = np.transpose(self.matrix)
+        self.matrix = self.matrix.T
 
 
 # Functions for ease.
