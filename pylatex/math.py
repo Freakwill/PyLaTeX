@@ -263,7 +263,7 @@ class ColumnVector(Vector):
 # Functions for ease.
 def dollar(x, *args, **kwargs):
     """Shorthand for inline math form: $math expression$.
-    
+
     Example
     ---
     >>> dollar('c_B')
