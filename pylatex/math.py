@@ -247,9 +247,12 @@ class Vector(Matrix):
             'p' | 'b' ('p' by default)
         """
         super(Vector, self).__init__(matrix=vec, mtype=mtype, *args, **kwargs)
-        if self.matrix.ndim != 1:
-            vec = self.matrix.ravel()
-        self.matrix = vec.reshape(1, vec.shape[0])
+        if self.matrix.ndim == 2:
+            m, n = self.matrix.shape
+            if m > 1 and n > 1:
+                self.matrix = self.matrix.reshape(1, m * n)
+        else:
+            self.matrix = self.matrix.reshape(1, self.matrix.shape[0])
 
 
 class ColumnVector(Vector):
