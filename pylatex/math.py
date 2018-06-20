@@ -233,8 +233,8 @@ class Determinant(Matrix):
 class Vector(Matrix):
     """Vector < Matrix.
 
-    Arguments:
-        vec: array(1D) | tuple | list (of numbers)
+    Vector is a 1dim Matrix. If it receives a matrix,
+    then the matrix will be reshaped.
     """
 
     def __init__(self, vec, mtype='p', *args, **kwargs):
