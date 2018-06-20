@@ -246,10 +246,10 @@ class Vector(Matrix):
         mtype: str
             'p' | 'b' ('p' by default)
         """
-        if vec.ndim != 1:
-            vec = vec.ravel()
-        vec = vec.reshape(1, vec.shape[0])
         super(Vector, self).__init__(matrix=vec, mtype=mtype, *args, **kwargs)
+        if self.matrix.ndim != 1:
+            vec = self.matrix.ravel()
+        self.matrix = vec.reshape(1, vec.shape[0])
 
 
 class ColumnVector(Vector):
