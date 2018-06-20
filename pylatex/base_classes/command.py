@@ -184,8 +184,12 @@ class Command(CommandBase):
 class Slash:
     """Shorthand for Command."""
 
+    escape = False
+
     def __getattr__(self, command):
         def f(*args, **kwargs):
+            if self.escape is False:
+                args = (NoEscape(arg) for arg in args)
             return Command(command, arguments=Arguments(*args), **kwargs)
         return f
 
