@@ -221,11 +221,13 @@ class Determinant(Matrix):
 
     def __init__(self, matrix, *args, **kwargs):
         """
-        Arguments:
-            matrix: square matrix
+        Args
+        ---
+        matrix: numpy.ndarray
+            square matrix
         """
-        assert matrix.ndim == 2 and matrix.shape[1] == matrix.shape[0]
         super(Determinant, self).__init__(matrix, mtype='v', *args, **kwargs)
+        assert self.matrix.ndim == 2 and self.matrix.shape[1] == self.matrix.shape[0]
 
 
 class Vector(Matrix):
@@ -245,6 +247,8 @@ class Vector(Matrix):
         """
         if vec.ndim == 1:
             vec = vec.reshape(1, vec.shape[0])
+        else:
+            vec = vec.reshape(1, np.prod(vec.shape))
         super(Vector, self).__init__(matrix=vec, mtype=mtype, *args, **kwargs)
 
 
