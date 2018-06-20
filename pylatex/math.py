@@ -245,10 +245,9 @@ class Vector(Matrix):
         mtype: str
             'p' | 'b' ('p' by default)
         """
-        if vec.ndim == 1:
-            vec = vec.reshape(1, vec.shape[0])
-        else:
-            vec = vec.reshape(1, np.prod(vec.shape))
+        if vec.ndim != 1:
+            vec = vec.ravel()
+        vec = vec.reshape(1, vec.shape[0])
         super(Vector, self).__init__(matrix=vec, mtype=mtype, *args, **kwargs)
 
 
