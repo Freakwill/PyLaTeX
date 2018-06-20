@@ -227,7 +227,8 @@ class Determinant(Matrix):
             square matrix
         """
         super(Determinant, self).__init__(matrix, mtype='v', *args, **kwargs)
-        assert self.matrix.ndim == 2 and self.matrix.shape[1] == self.matrix.shape[0]
+        assert self.matrix.ndim == 2 and \
+            self.matrix.shape[1] == self.matrix.shape[0]
 
 
 class Vector(Matrix):
