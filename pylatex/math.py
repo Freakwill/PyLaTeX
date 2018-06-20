@@ -240,16 +240,12 @@ class Vector(Matrix):
     def __init__(self, vec, mtype='p', *args, **kwargs):
         """
         Arguments:
-            vec {[type]} -- [description]
-            *args {[type]} -- [description]
-            **kwargs {[type]} -- [description]
+            vec {tuple|list|array} -- an array
 
         Keyword Arguments:
-            mtype {str} -- [description] (default: {'p'})
+            mtype {str} -- 'p' 'b' (default: {'p'})
         """
-        if isinstance(vec, np.ndarray):
-            vec = vec
-        elif isinstance(vec, (tuple, list)):
+        if isinstance(vec, (tuple, list)):
             vec = np.array(vec)
         if vec.ndim == 1:
             vec = vec.reshape(1, vec.shape[0])
@@ -284,18 +280,3 @@ def ddollar(x, *args, **kwargs):
         \[c_B\]
     """
     return Math(data=x, inline=False, escape=False, *args, **kwargs)
-
-
-def vector(x, mtype='p', *args, **kwargs):
-    """Replace Vector.
-
-    It is more easy then Vector.
-
-    Arguments:
-        x -- a matrix(1*n-shape) or vector(n-dim) or a list of numbers.
-    """
-    if isinstance(x, np.ndarray) and x.ndim == 1:
-        x = x.reshape(1, x.shape[0])
-    elif isinstance(x, (tuple, list)):
-        x = np.array([x])
-    return Matrix(x, mtype=mtype, *args, **kwargs)
