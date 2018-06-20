@@ -239,11 +239,10 @@ class Vector(Matrix):
 
     def __init__(self, vec, mtype='p', *args, **kwargs):
         """
-        Arguments:
-            vec {tuple|list|array} -- an array
-
-        Keyword Arguments:
-            mtype {str} -- 'p' 'b' (default: {'p'})
+        Args
+        ----
+        vec: {tuple|list|array}
+        mtype: 'p' | 'b' ('p' by default)
         """
         if isinstance(vec, (tuple, list)):
             vec = np.array(vec)
@@ -264,10 +263,11 @@ class ColumnVector(Vector):
 # Functions for ease.
 def dollar(x, *args, **kwargs):
     """Shorthand for inline math form: $math expression$.
-
-    Example:
-        >>> dollar('c_B')
-        $c_B$
+    
+    Example
+    ---
+    >>> dollar('c_B')
+    $c_B$
     """
     return Math(data=x, inline=True, escape=False, *args, **kwargs)
 
@@ -275,8 +275,9 @@ def dollar(x, *args, **kwargs):
 def ddollar(x, *args, **kwargs):
     r"""Shorthand for math form: \[math expression\] == $$math expression$$.
 
-    Example:
-        >>> ddollar('c_B')
-        \[c_B\]
+    Example
+    ---
+    >>> ddollar('c_B')
+    \[c_B\]
     """
     return Math(data=x, inline=False, escape=False, *args, **kwargs)
