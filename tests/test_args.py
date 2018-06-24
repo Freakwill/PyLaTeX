@@ -21,9 +21,7 @@ from pylatex import Document, Section, Math, Tabular, Figure, SubFigure, \
     SmallText, FootnoteText, TextColor, FBox, MdFramed, Tabu, \
     HorizontalSpace, VerticalSpace, TikZCoordinate, TikZNode, \
     TikZNodeAnchor, TikZUserPath, TikZPathList, TikZPath, TikZDraw, \
-    TikZScope, TikZOptions, Hyperref, Marker, Slash, \
-    MathEquation, Vector, ColVector, Determinant
-
+    TikZScope, TikZOptions, MathEquation, Slash, Vector, ColVector, Determinant
 from pylatex.utils import escape_latex, fix_filename, dumps_list, bold, \
     italic, verbatim, NoEscape
 
@@ -70,11 +68,6 @@ def test_document():
 def test_section():
     sec = Section(title='', numbering=True, data=None)
     repr(sec)
-
-
-def test_hyperref():
-    hr = Hyperref(Marker("marker", "prefix"), "text")
-    repr(hr)
 
 
 def test_math():
@@ -472,3 +465,21 @@ def test_errors():
         t.add_row((1, 2, 3), escape=False, strict=False)
     except TableRowSizeError:
         raise
+
+
+def test_slash():
+    s = Slash()
+    print(s.frac('1','2').dumps())
+
+
+def test_vector():
+    Vector([1, 2, 3])
+    ColVector([1, 2, 3])
+
+
+def test_det():
+    Determinant([[1, 2], [2, 3]])
+
+
+def test_matheq():
+    MathEquation()
