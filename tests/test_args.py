@@ -468,18 +468,22 @@ def test_errors():
 
 
 def test_slash():
+    # Slash
     s = Slash()
-    print(s.frac('1','2').dumps())
+    s.frac('1', '2')
 
 
 def test_vector():
+    # Vector and ColVector
     Vector([1, 2, 3])
     ColVector([1, 2, 3])
 
 
 def test_det():
+    # determinant
     Determinant([[1, 2], [2, 3]])
 
 
 def test_matheq():
+    # math equations
     MathEquation()
