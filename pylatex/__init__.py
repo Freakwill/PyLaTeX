@@ -9,7 +9,8 @@ from .basic import HugeText, NewPage, LineBreak, NewLine, HFill, LargeText, \
     MediumText, SmallText, FootnoteText, TextColor
 from .document import Document
 from .frames import MdFramed, FBox
-from .math import Math, VectorName, Matrix, Alignat
+from .math import Math, VectorName, Matrix, Alignat, MathEquation, Vector, \
+    ColVector
 from .package import Package
 from .section import Section, Subsection, Subsubsection
 from .table import Table, MultiColumn, MultiRow, Tabular, Tabu, LongTable, \
@@ -20,13 +21,12 @@ from .tikz import TikZ, Axis, Plot, TikZNode, TikZDraw, TikZCoordinate, \
 from .figure import Figure, SubFigure, StandAloneGraphic
 from .lists import Enumerate, Itemize, Description
 from .quantities import Quantity
-from .base_classes import Command, UnsafeCommand
+from .base_classes import Command, UnsafeCommand, Slash, newcommand
 from .utils import NoEscape, escape_latex
 from .errors import TableRowSizeError
 from .headfoot import PageStyle, Head, Foot, simple_page_number
 from .position import Center, FlushLeft, FlushRight, MiniPage, TextBlock, \
     HorizontalSpace, VerticalSpace
-from .labelref import Marker, Label, Ref, Pageref, Eqref, Autoref, Hyperref
 
 from ._version import get_versions
 __version__ = get_versions()['version']
