@@ -22,7 +22,7 @@ from pylatex import Document, Section, Math, Tabular, Figure, SubFigure, \
     HorizontalSpace, VerticalSpace, TikZCoordinate, TikZNode, \
     TikZNodeAnchor, TikZUserPath, TikZPathList, TikZPath, TikZDraw, \
     TikZScope, TikZOptions, \
-    MathEquation, Slash, Vector, ColumnVector, Determinant
+    MathEquation, slash, Vector, ColumnVector, Determinant
 from pylatex.utils import escape_latex, fix_filename, dumps_list, bold, \
     italic, verbatim, NoEscape
 
@@ -470,8 +470,7 @@ def test_errors():
 
 def test_slash():
     # Slash
-    s = Slash()
-    s.frac('1', '2')
+    slash.frac('1', '2')
 
 
 def test_vector():
