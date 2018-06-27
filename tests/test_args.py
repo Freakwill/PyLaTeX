@@ -22,7 +22,7 @@ from pylatex import Document, Section, Math, Tabular, Figure, SubFigure, \
     HorizontalSpace, VerticalSpace, TikZCoordinate, TikZNode, \
     TikZNodeAnchor, TikZUserPath, TikZPathList, TikZPath, TikZDraw, \
     TikZScope, TikZOptions, \
-    MathEquation, Slash, Vector, ColomnVector, Determinant
+    MathEquation, Slash, Vector, ColumnVector, Determinant
 from pylatex.utils import escape_latex, fix_filename, dumps_list, bold, \
     italic, verbatim, NoEscape
 
