@@ -21,8 +21,8 @@ from pylatex import Document, Section, Math, Tabular, Figure, SubFigure, \
     SmallText, FootnoteText, TextColor, FBox, MdFramed, Tabu, \
     HorizontalSpace, VerticalSpace, TikZCoordinate, TikZNode, \
     TikZNodeAnchor, TikZUserPath, TikZPathList, TikZPath, TikZDraw, \
-    TikZScope, TikZOptions, \
-    MathEquation, slash, Vector, ColumnVector, Determinant
+    TikZScope, TikZOptions, slash, \
+    MathEquation, Vector, ColumnVector, Determinant
 from pylatex.utils import escape_latex, fix_filename, dumps_list, bold, \
     italic, verbatim, NoEscape
 
