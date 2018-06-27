@@ -21,7 +21,8 @@ from pylatex import Document, Section, Math, Tabular, Figure, SubFigure, \
     SmallText, FootnoteText, TextColor, FBox, MdFramed, Tabu, \
     HorizontalSpace, VerticalSpace, TikZCoordinate, TikZNode, \
     TikZNodeAnchor, TikZUserPath, TikZPathList, TikZPath, TikZDraw, \
-    TikZScope, TikZOptions, MathEquation, Slash, Vector, ColVector, Determinant
+    TikZScope, TikZOptions, \
+    MathEquation, Slash, Vector, ColomnVector, Determinant
 from pylatex.utils import escape_latex, fix_filename, dumps_list, bold, \
     italic, verbatim, NoEscape
 
@@ -476,7 +477,7 @@ def test_slash():
 def test_vector():
     # Vector and ColVector
     Vector([1, 2, 3])
-    ColVector([1, 2, 3])
+    ColumnVector([1, 2, 3])
 
 
 def test_det():
