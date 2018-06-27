@@ -10,7 +10,7 @@ from .basic import HugeText, NewPage, LineBreak, NewLine, HFill, LargeText, \
 from .document import Document
 from .frames import MdFramed, FBox
 from .math import Math, VectorName, Matrix, Alignat, MathEquation, Vector, \
-    ColumnVector
+    ColumnVector, Determinant
 from .package import Package
 from .section import Section, Subsection, Subsubsection
 from .table import Table, MultiColumn, MultiRow, Tabular, Tabu, LongTable, \
